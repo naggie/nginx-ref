@@ -10,7 +10,15 @@ fi
 set -e
 cd $(dirname $0)
 
-apt-get install -y nginx certbot
+apt-get install -y nginx certbot openssl
 
 cp nginx.conf /etc/nginx/nginx.conf
 
+mkdir -p /etc/nginx/include
+cp include/* /etc/nginx/include/
+
+if [ ! -f /etc/nginx/dhparams.pem ]; then
+    openssl dhparam -out /etc/nginx/dhparams.pem 2048
+fi
+
+systemctl reload nginx
