@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# for Ubuntu 20.04+
+
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root"
     exit 1
