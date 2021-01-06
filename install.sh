@@ -8,11 +8,11 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 function purge {
-    pushd /etc/nginx
+    pushd /etc/nginx >/dev/null
         for file in "$@"; do
             [ -e $file ] && rm -rf $file
         done
-    popd
+    popd >/dev/null
 }
 
 set -e
