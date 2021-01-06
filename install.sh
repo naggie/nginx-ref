@@ -23,6 +23,8 @@ apt-get install -y nginx certbot openssl
 
 # remove specific files which are made redundant by this script
 purge {sites,modules}-{enabled,available}
+purge snippets/fastcgi-php.conf
+purge snippets/snakeoil.conf
 purge fastcgi.conf
 purge koi-win koi-utf win-utf
 purge mime.types
