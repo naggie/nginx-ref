@@ -19,7 +19,7 @@ set -e
 cd $(dirname $0)
 
 # deps
-apt-get install -y nginx certbot openssl
+apt-get install -y nginx certbot python3-certbot-nginx openssl
 
 # remove specific files which are made redundant by this script
 purge {sites,modules}-{enabled,available}
@@ -52,5 +52,4 @@ fi
 
 systemctl reload nginx
 
-# TODO initial letsencrypt for each hostname, based on server entry
-#grep --only-matching --no-filename -P '(?<=server_name).+(?=;)' * | xargs
+sudo python3 initialise-certbot.py
