@@ -25,10 +25,13 @@ purge fastcgi.conf
 purge koi-win koi-utf win-utf
 purge mime.types
 purge proxy_params scgi_params uwsgi_params fastcgi_params
-purge snippets
 
 # replace main config
 cp nginx.conf /etc/nginx/nginx.conf
+
+# ensure important directories exist
+mkdir -p /etc/nginx/snippets
+mkdir -p /etc/nginx/conf.d
 
 # error pages
 mkdir -p /etc/nginx/error-pages/
@@ -36,8 +39,7 @@ cp error-pages/* /etc/nginx/error-pages/
 chown -R www-data /etc/nginx/error-pages/
 
 # templates, proxy settings, short-hand ssl stuff
-mkdir -p /etc/nginx/include
-cp include/* /etc/nginx/include/
+cp snippets/* /etc/nginx/snippets/
 
 # required for DH based key exchange
 if [ ! -f /etc/nginx/dhparams.pem ]; then
