@@ -45,3 +45,6 @@ if [ ! -f /etc/nginx/dhparams.pem ]; then
 fi
 
 systemctl reload nginx
+
+# TODO initial letsencrypt for each hostname, based on server entry
+#grep --only-matching --no-filename -P '(?<=server_name).+(?=;)' * | xargs
