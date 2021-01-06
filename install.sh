@@ -50,6 +50,10 @@ if [ ! -f /etc/nginx/dhparams.pem ]; then
     openssl dhparam -out /etc/nginx/dhparams.pem 2048
 fi
 
-systemctl reload nginx
+# nginx starts as root but then drops down to www-data. This means restarts can
+# load the certificate but reloads can't, because the directory is un-listable
+# to non-root.
+sudo chmod 0755 /etc/letsencrypt/live
 
 sudo python3 initialise-certbot.py
+systemctl reload nginx # done implicitly before
