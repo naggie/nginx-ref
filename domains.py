@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+# enumerates domains to initialise letsencrypt. May not be necessary, as certbot is clever nowadays....
 
 os.chdir("examples")
 
