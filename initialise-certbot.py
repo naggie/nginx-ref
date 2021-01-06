@@ -21,5 +21,5 @@ for domain in domains:
         "--agree-tos",
         "--register-unsafely-without-email",
         "--nginx",
-        domain,
+        "--domain", domain,
     ])
