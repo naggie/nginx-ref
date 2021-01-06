@@ -8,7 +8,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 function purge {
-    if [ -e "$1" ]; then
+    if [ -e "/etc/nginx/$1" ]; then
         rm -rf /etc/nginx/"$1"
     fi
 }
