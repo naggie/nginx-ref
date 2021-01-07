@@ -14,6 +14,7 @@ for fp in os.listdir():
                 domains.add(line.split()[1].strip(';'))
 
 for domain in domains:
+    print("\033[32m%s\033[0m" % "Initialising %s..." % domain)
     subprocess.check_call([
         "certbot",
         "certonly",
