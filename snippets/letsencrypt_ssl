@@ -1,2 +1,0 @@
-ssl_certificate     /etc/letsencrypt/live/$ssl_server_name/fullchain.pem;
-ssl_certificate_key /etc/letsencrypt/live/$ssl_server_name/privkey.pem;
