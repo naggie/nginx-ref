@@ -19,6 +19,7 @@ set -e
 cd $(dirname $0)
 
 # deps
+apt-get update
 apt-get install -y nginx certbot python3-certbot-nginx openssl
 
 # remove specific files which are made redundant by this script
