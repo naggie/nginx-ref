@@ -30,7 +30,7 @@ error_page 413 /_errors/ratelimit.html;
 
 location /_errors/ {
     internal;
-    alias /var/www/error_pages/;
+    alias /etc/nginx/error-pages/;
     allow all;
 }
 
