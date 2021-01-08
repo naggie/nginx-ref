@@ -9,6 +9,7 @@ os.chdir("/etc/nginx/conf.d")
 
 domains = dict()
 
+# TODO factor this
 for fp in os.listdir():
     with open(fp) as f:
         for line in f:
