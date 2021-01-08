@@ -29,3 +29,7 @@ examples. See `./initialise-certbot.py` for more information.
 
 `epgen/` contains a script to generate the error pages in `error-pages/`. It can also
 embed a logo.
+
+# Cleanup
+
+`cleanup.py` will delete/deactivate any unused letsencrypt certificates.
