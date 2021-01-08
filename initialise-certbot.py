@@ -30,6 +30,7 @@ for domain, fp in domains.items():
     # to a non-existent certificate will be in the requisite configuration
     # file. As the certbot-nginx plugin needs to reload nginx, this will fail
     # unless the config file is disabled temporarily.
+    # This prevents a chicken-and-egg situation.
     os.rename(fp, fp + '.disabled')
 
     print("\033[32m%s\033[0m" % "\nInitialising %s..." % domain)
