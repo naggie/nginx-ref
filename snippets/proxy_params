@@ -5,6 +5,7 @@ proxy_set_header X-Forwarded-Proto $scheme;
 proxy_set_header X-Forwarded-Host $http_host;
 proxy_set_header X-Original-Uri $request_uri;
 proxy_set_header X-Original-Url $scheme://$http_host$request_uri;
+proxy_set_header X-Frame-Options SAMEORIGIN;
 
 # Transparent automatic websocket upgrade
 # relies on map statement in nginx.conf
