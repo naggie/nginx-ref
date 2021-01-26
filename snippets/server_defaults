@@ -1,3 +1,4 @@
+# directives that can't go in nginx.conf go here
 listen 443 ssl http2;
 listen [::]:443 ssl http2;
 
