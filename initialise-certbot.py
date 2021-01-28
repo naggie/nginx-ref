@@ -3,8 +3,6 @@ import os
 import subprocess
 # enumerates domains to initialise certbot
 
-# ASSUMES ONE DOMAIN PER FILE
-
 os.chdir("/etc/nginx/conf.d")
 
 domains = dict()
@@ -16,7 +14,6 @@ for fp in os.listdir():
             if 'server_name' in line:
                 domain = line.split()[1].strip(';')
                 domains[domain] = fp
-                break
 
 for domain, fp in domains.items():
     key = '/etc/letsencrypt/live/%s/fullchain.pem' % domain
