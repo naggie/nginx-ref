@@ -15,7 +15,7 @@ for fp in os.listdir():
         for line in f:
             if 'server_name' in line:
                 domain = line.split()[1].strip(';')
-                server_names.add()
+                server_names.add(domain)
                 break
 
 certificates = set(os.listdir("/etc/letsencrypt/live/"))
