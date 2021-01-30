@@ -11,7 +11,8 @@ domains = dict()
 for fp in os.listdir():
     with open(fp) as f:
         for line in f:
-            if 'server_name' in line:
+            line = line.strip()
+            if line.startswith('server_name'):
                 domain = line.split()[1].strip(';')
                 domains[domain] = fp
 
