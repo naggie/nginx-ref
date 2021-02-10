@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # for Ubuntu 20.04+, clean instal
 
 if [[ $EUID -ne 0 ]]; then
@@ -42,7 +41,7 @@ cp nginx.conf /etc/nginx/nginx.conf
 
 # ensure permissions are right (if installing over the mattermost-omnibus this
 # is necessary as `nginx` user is used)
-chown -R www-data /var/{cache,log}/nginx
+chown -R www-data /var/{cache,log}/nginx || true
 
 # ensure important directories exist
 mkdir -p /etc/nginx/snippets

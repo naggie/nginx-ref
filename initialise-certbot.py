@@ -7,14 +7,24 @@ os.chdir("/etc/nginx/conf.d")
 
 domains = dict()
 
-# TODO factor this
+LETSENCRYPT_CERT_PATH = "/etc/letsencrypt/live/%s/fullchain.pem"
+
+def get_letsencrypt_domains(content):
+    # get server name
+    for line in content.splitlines():
+        line = line.strip()
+        if line.startswith('server_name'):
+            domain = line.split()[1].strip(';')
+
+            # check certbot is used for this domain
+            if LETSENCRYPT_CERT_PATH % domain in content:
+                yield domain
+
+
 for fp in os.listdir():
     with open(fp) as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('server_name'):
-                domain = line.split()[1].strip(';')
-                domains[domain] = fp
+        for domain in get_letsencrypt_domains(f.read()):
+            domains[domain] = fp
 
 for domain, fp in domains.items():
     key = '/etc/letsencrypt/live/%s/fullchain.pem' % domain
