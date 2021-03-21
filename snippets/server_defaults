@@ -12,11 +12,6 @@ add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; prelo
 #    return 200 'User-agent: *\nDisallow: /\n';
 #}
 
-location /ip {
-    return 200 $realip_remote_addr;
-    add_header Content-Type text/plain;
-}
-
 error_page 401 403 /_errors/denied.html;
 error_page 404 /_errors/notfound.html;
 error_page 400 500 501 503 /_errors/error.html;
