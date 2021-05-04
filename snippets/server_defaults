@@ -3,14 +3,7 @@ listen 443 ssl http2;
 listen [::]:443 ssl http2;
 
 # no effect over HTTP, so its here
-add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
-
-# TODO make this contitional and off by default. Whilst websites that are
-# sensitive should be secured, they may also want to be "ex-directory" which is
-# effectively what this does
-#location /robots.txt {
-#    return 200 'User-agent: *\nDisallow: /\n';
-#}
+add_header Strict-Transport-Security "max-age=63072000; preload" always;
 
 error_page 401 403 /_errors/denied.html;
 error_page 404 /_errors/notfound.html;
