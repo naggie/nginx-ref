@@ -71,3 +71,6 @@ sudo rename s/.conf.disabled$/.conf/g /etc/nginx/conf.d/*.conf.disabled
 # note certbot may attempt to reload nginx
 sudo python3 initialise-certbot.py
 systemctl reload nginx
+
+# reloading can silently fail, check syntax
+sudo nginx -t
