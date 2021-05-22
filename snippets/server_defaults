@@ -16,4 +16,3 @@ location /_errors/ {
     alias /etc/nginx/error-pages/;
     allow all;
 }
-
