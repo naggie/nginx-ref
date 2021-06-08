@@ -68,6 +68,11 @@ sudo rename s/.conf$/.conf.disabled/g /etc/nginx/conf.d/*.conf
 sudo service nginx start
 sudo rename s/.conf.disabled$/.conf/g /etc/nginx/conf.d/*.conf.disabled
 
+# remove any dangling config files left over if initialise-certbot previously
+# failed. Note that the config files should be copied over entirely before
+# running this script; that way config files will not be lost.
+sudo rm /etc/nginx/conf.d/*.conf.disabled 2> /dev/null || true
+
 # note certbot may attempt to reload nginx
 sudo python3 initialise-certbot.py
 systemctl reload nginx

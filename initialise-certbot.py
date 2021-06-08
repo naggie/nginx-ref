@@ -21,17 +21,27 @@ def get_letsencrypt_domains(content):
                 yield domain
 
 
+# find all domains, map to conf file
 for fp in os.listdir():
+    if not fp.endswith(".conf"):
+        continue
+
     with open(fp) as f:
         for domain in get_letsencrypt_domains(f.read()):
             domains[domain] = fp
 
-for domain, fp in domains.items():
-    key = '/etc/letsencrypt/live/%s/fullchain.pem' % domain
+# remove domains that are already configured. Note there could be multiple per
+# file
+for domain, conffile in domains.copy().items():
+    keyfile = LETSENCRYPT_CERT_PATH % domain
 
-    if os.path.exists(key):
+    if os.path.exists(keyfile):
         print("\033[33m%s\033[0m" % "\nSkipping existing %s..." % domain)
+        del domains[domain]
         continue
+
+for domain, conffile in domains.items():
+    keyfile = LETSENCRYPT_CERT_PATH % domain
 
     # we use certonly to manage our own files instead of allowing certbot to
     # edit them (so version control is easier)
@@ -39,8 +49,9 @@ for domain, fp in domains.items():
     # to a non-existent certificate will be in the requisite configuration
     # file. As the certbot-nginx plugin needs to reload nginx, this will fail
     # unless the config file is disabled temporarily.
-    # This prevents a chicken-and-egg situation.
-    os.rename(fp, fp + '.disabled')
+    # This prevents a chicken-and-egg situation; isolate all uninitialised configs.
+    for fp in domains.values():
+        os.rename(fp, fp + '.disabled')
 
     print("\033[32m%s\033[0m" % "\nInitialising %s..." % domain)
     subprocess.check_call([
@@ -54,7 +65,8 @@ for domain, fp in domains.items():
     ])
 
     # re-enable
-    os.rename(fp + '.disabled', fp)
+    for fp in domains.values():
+        os.rename(fp + '.disabled', fp)
 
 # reload nginx, even though certbot would have done it -- it's necessary due to
 # the temporary config disabling we did.
