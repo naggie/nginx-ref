@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import os
 import subprocess
+from collections import defaultdict
+
 # enumerates domains to initialise certbot
 
 os.chdir("/etc/nginx/conf.d")
@@ -9,12 +11,13 @@ domains = dict()
 
 LETSENCRYPT_CERT_PATH = "/etc/letsencrypt/live/%s/fullchain.pem"
 
+
 def get_letsencrypt_domains(content):
     # get server name
     for line in content.splitlines():
         line = line.strip()
-        if line.startswith('server_name'):
-            domain = line.split()[1].strip(';')
+        if line.startswith("server_name"):
+            domain = line.split()[1].strip(";")
 
             # check certbot is used for this domain
             if LETSENCRYPT_CERT_PATH % domain in content:
@@ -40,9 +43,13 @@ for domain, conffile in domains.copy().items():
         del domains[domain]
         continue
 
+# invert to list by file
+conffiles = defaultdict(set)
 for domain, conffile in domains.items():
-    keyfile = LETSENCRYPT_CERT_PATH % domain
+    conffiles[conffile].add(domain)
 
+
+for conffile, domains in conffiles.items():
     # we use certonly to manage our own files instead of allowing certbot to
     # edit them (so version control is easier)
     # As such, before a certificate is obtained for the first time, a reference
@@ -50,24 +57,33 @@ for domain, conffile in domains.items():
     # file. As the certbot-nginx plugin needs to reload nginx, this will fail
     # unless the config file is disabled temporarily.
     # This prevents a chicken-and-egg situation; isolate all uninitialised configs.
-    for fp in domains.values():
-        os.rename(fp, fp + '.disabled')
+    for fp in conffiles.keys():
+        os.rename(fp, fp + ".disabled")
 
-    print("\033[32m%s\033[0m" % "\nInitialising %s..." % domain)
-    subprocess.check_call([
-        "certbot",
-        "certonly",
-        "-n",
-        "--agree-tos",
-        "--register-unsafely-without-email",
-        "--nginx",
-        "--domain", domain,
-    ])
+    for domain in domains:
+        keyfile = LETSENCRYPT_CERT_PATH % domain
+
+        print("\033[32m%s\033[0m" % "\nInitialising %s..." % domain)
+        subprocess.check_call(
+            [
+                "certbot",
+                "certonly",
+                "-n",
+                "--agree-tos",
+                "--register-unsafely-without-email",
+                "--nginx",
+                "--domain",
+                domain,
+            ]
+        )
 
     # re-enable
-    for fp in domains.values():
-        os.rename(fp + '.disabled', fp)
+    for fp in conffiles.keys():
+        os.rename(fp + ".disabled", fp)
+
+# check the configuration
+subprocess.check_call(["nginx", "-t"])
 
 # reload nginx, even though certbot would have done it -- it's necessary due to
 # the temporary config disabling we did.
-subprocess.check_call(['systemctl', 'reload', 'nginx'])
+subprocess.check_call(["systemctl", "reload", "nginx"])

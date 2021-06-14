@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import subprocess
+
 # enumerates server_names to delete unused certificates
 
 # ASSUMES ONE DOMAIN PER FILE
@@ -13,15 +14,15 @@ server_names = set()
 for fp in os.listdir():
     with open(fp) as f:
         for line in f:
-            if 'server_name' in line:
-                domain = line.split()[1].strip(';')
+            if "server_name" in line:
+                domain = line.split()[1].strip(";")
                 server_names.add(domain)
                 break
 
 certificates = set(os.listdir("/etc/letsencrypt/live/"))
-certificates.discard('README')
+certificates.discard("README")
 
 dangling = certificates - server_names
 
 for name in dangling:
-    subprocess.check_call(['certbot', 'delete', '-n', '--cert-name', name])
+    subprocess.check_call(["certbot", "delete", "-n", "--cert-name", name])
