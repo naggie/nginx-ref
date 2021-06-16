@@ -1,7 +1,0 @@
-location ~* \.(?:ico|css|js|gif|jpe?g|png|svg)$ {
-    expires 7d;
-    # allow any cache to cache it (i.e. cloudflare, browser) (consider also, private, to improve security)
-    add_header Cache-Control "public";
-    # side-affect -- don't create extra noise
-    access_log off;
-}
