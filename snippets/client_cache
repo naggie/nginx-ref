@@ -7,6 +7,9 @@
 # units, the newer (HTTP/1.1) Cache-Control header is preferred as it
 # prevents expiry spikes and takes precedence anyway.
 #
+# Note that if you're using cloudflare, HTML pages are not cached by default.
+# To enable the cache, set a page rule for a wildcard.
+#
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
 add_header Cache-Control "public, max-age=3600, must-revalidate";
 
