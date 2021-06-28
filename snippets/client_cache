@@ -1,4 +1,4 @@
-# Main context can be cached for an hour, public meaning CDNs can also
+# Main context can be cached for 10 mins, public, meaning CDNs can also
 # cache it. Setting it to a short time allows CDNs to take the majority
 # of the traffic given a surge, whilst still allowing for relatively quick
 # updates.
@@ -10,8 +10,11 @@
 # Note that if you're using cloudflare, HTML pages are not cached by default.
 # To enable the cache, set a page rule for a wildcard.
 #
+# Note also that you should use private cache control or no cache for user
+# session or dynamic pages.
+#
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
-add_header Cache-Control "public, max-age=3600, must-revalidate";
+add_header Cache-Control "public, max-age=600, must-revalidate";
 
 location ~* \.(?:ico|gif|jpe?g|png|svg|webp|jp2|jxl)$ {
     # images generally don't change so they can be cached for a long
