@@ -11,7 +11,7 @@
 # To enable the cache, set a page rule for a wildcard.
 #
 # Note also that you should use private cache control or no cache for user
-# session or dynamic pages.
+# session or dynamic pages. Only use this for anonymous pages.
 #
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
 add_header Cache-Control "public, max-age=600, must-revalidate";
