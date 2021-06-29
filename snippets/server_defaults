@@ -2,9 +2,6 @@
 listen 443 ssl http2;
 listen [::]:443 ssl http2;
 
-# no effect over HTTP, so its here
-add_header Strict-Transport-Security "max-age=63072000; preload" always;
-
 error_page 401 403 /_errors/denied.html;
 error_page 404 /_errors/notfound.html;
 error_page 400 500 501 503 /_errors/error.html;

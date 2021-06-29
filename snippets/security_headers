@@ -1,0 +1,17 @@
+# note that setting any header lower in the hierarchy will prevent alll of
+# these from being sent, which is why they're in a separate file as well as
+# being included in server_defaults
+add_header X-Frame-Options "SAMEORIGIN";
+add_header X-Content-Type-Options "nosniff";
+add_header X-XSS-Protection "1; mode=block";
+
+# No affect over HTTP, but harmless.
+add_header Strict-Transport-Security "max-age=63072000; preload" always;
+
+
+# Note that unsafe-inline can be unsafe, as the name suggests -- it's enabled
+# here to be most compatible. It's fine for static websites providing you trust
+# the content. See https://content-security-policy.com/unsafe-inline/
+# Websockets have to be specified separately, as 'self' does not match on
+# Safari, at least.
+add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' wss://$server_name; img-src 'self' data:;";
