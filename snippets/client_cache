@@ -22,3 +22,6 @@ location ~* \.(?:ico|gif|jpe?g|png|svg|webp|jp2|jxl)$ {
     add_header Cache-Control "public, max-age=31556952, immutable";
     access_log off;
 }
+
+# NOTE: If you include this, you may also want to include snippets/security
+# headers as this will prevent header inheritance.
