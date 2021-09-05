@@ -13,3 +13,9 @@ location /_errors/ {
     alias /etc/nginx/error-pages/;
     allow all;
 }
+
+# Assuming you use this charset (you should) this may speed up rendering as the
+# browser won't try and infer the typeset.
+# This adds the charset to the Content-Type header for probably matching
+# mimetypes (html, xml, json etc)
+charset UTF-8;
