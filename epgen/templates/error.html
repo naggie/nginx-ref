@@ -17,7 +17,10 @@
                 left:50%;
                 transform: translateY(-30%) translateX(-50%);
                 border:1px solid #ddd;
-                padding:30px 50px;
+                padding:30px;
+                max-width:400px;
+                width:100%;
+                box-sizing:border-box;
             }
 
             h1 {
@@ -32,18 +35,7 @@
 
             p {
                 color:#555;
-                max-width:500px;
                 display:inline-block;
-            }
-
-            @media (max-width: 500px) {
-                #content {
-                    width:100%;
-                    box-sizing:border-box;
-                    border-left:none;
-                    border-right:none;
-                    padding:50px 0;
-                }
             }
 
         {% if auto_retry %}
