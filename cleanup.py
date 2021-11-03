@@ -11,7 +11,7 @@ os.chdir("/etc/nginx/conf.d")
 server_names = set()
 
 # TODO factor this
-for fp in os.listdir():
+for fp in os.listdir("."):
     with open(fp) as f:
         for line in f:
             if "server_name" in line:
