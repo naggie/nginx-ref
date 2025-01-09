@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#! /usr/bin/env nix-shell
+#! nix-shell -i python3 -p python3 -p python3Packages.jinja2
 """
 Usage: {0} <output_dir> <logo>
 Usage: {0} <output_dir>
