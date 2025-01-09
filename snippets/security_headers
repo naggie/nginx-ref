@@ -1,7 +1,6 @@
 # note that setting any header lower in the hierarchy will prevent alll of
 # these from being sent, which is why they're in a separate file as well as
 # being included in server_defaults
-add_header X-Frame-Options "SAMEORIGIN";
 add_header X-Content-Type-Options "nosniff";
 add_header X-XSS-Protection "1; mode=block";
 
